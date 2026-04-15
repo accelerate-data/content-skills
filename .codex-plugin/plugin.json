@@ -1,0 +1,24 @@
+{
+  "name": "ad-content",
+  "description": "Customer-facing content and GTM strategy artifacts.",
+  "author": {
+    "name": "Accelerate Data"
+  },
+  "repository": "https://github.com/accelerate-data/content-skills",
+  "license": "MIT",
+  "keywords": [
+    "content",
+    "gtm",
+    "marketing",
+    "codex",
+    "claude-code"
+  ],
+  "interface": {
+    "displayName": "Content Skills",
+    "shortDescription": "GTM content and strategy commands.",
+    "developerName": "Accelerate Data",
+    "category": "Marketing",
+    "capabilities": [],
+    "screenshots": []
+  }
+}

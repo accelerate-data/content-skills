@@ -1,0 +1,31 @@
+{
+  "generated_at": "2026-04-15T00:00:00Z",
+  "repo_root": "content-skills",
+  "primary_languages": ["Markdown", "JSON"],
+  "applications": [
+    {
+      "name": "content-skills plugin",
+      "type": "shared plugin source",
+      "description": "Single plugin-source repository with Claude and Codex manifests, commands under commands/. No skills directory — this repo only has slash commands."
+    }
+  ],
+  "modules": {
+    "claude_manifest": {
+      "path": ".claude-plugin/plugin.json",
+      "description": "Claude plugin manifest."
+    },
+    "codex_manifest": {
+      "path": ".codex-plugin/plugin.json",
+      "description": "Codex plugin manifest."
+    },
+    "commands": {
+      "path": "commands/",
+      "description": "Slash commands for GTM content creation and strategy maintenance."
+    }
+  },
+  "key_directories": {
+    "commands/": "All command files owned by this plugin repo",
+    ".claude-plugin/": "Claude plugin manifest",
+    ".codex-plugin/": "Codex plugin manifest"
+  }
+}
