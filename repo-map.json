@@ -18,6 +18,18 @@
       "path": ".codex-plugin/plugin.json",
       "description": "Codex plugin manifest."
     },
+    "manifest_validator": {
+      "path": "scripts/validate_plugin_manifests.py",
+      "description": "Validates required Claude/Codex plugin manifest fields, shared identity metadata, semver, and commands path."
+    },
+    "version_bump_check": {
+      "path": "scripts/check_plugin_version_bump.py",
+      "description": "Checks Claude/Codex version parity and verifies the shared plugin version is greater than origin/main."
+    },
+    "validator_tests": {
+      "path": "tests/",
+      "description": "Unit tests for manifest validation and version-bump parsing behavior."
+    },
     "commands": {
       "path": "commands/",
       "description": "Slash commands for GTM content creation and strategy maintenance."
@@ -26,6 +38,19 @@
   "key_directories": {
     "commands/": "All command files owned by this plugin repo",
     ".claude-plugin/": "Claude plugin manifest",
-    ".codex-plugin/": "Codex plugin manifest"
-  }
+    ".codex-plugin/": "Codex plugin manifest",
+    "scripts/": "Repo-local validation scripts",
+    "tests/": "Unit tests for validation scripts"
+  },
+  "validation_commands": [
+    "python3 -m json.tool .claude-plugin/plugin.json >/dev/null",
+    "python3 -m json.tool .codex-plugin/plugin.json >/dev/null",
+    "python3 scripts/validate_plugin_manifests.py",
+    "python3 scripts/check_plugin_version_bump.py --base-ref origin/main",
+    "python3 -m unittest discover -s tests",
+    "codex plugin marketplace add ."
+  ],
+  "validation_notes": [
+    "`codex plugin marketplace add .` should fail in this plugin source repo because marketplace registration belongs to a marketplace root."
+  ]
 }
