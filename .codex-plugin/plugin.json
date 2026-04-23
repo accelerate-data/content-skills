@@ -1,11 +1,13 @@
 {
-  "name": "ad-content",
+  "name": "content-skills",
   "description": "Customer-facing content and GTM strategy artifacts.",
+  "version": "1.0.1",
   "author": {
     "name": "Accelerate Data"
   },
   "repository": "https://github.com/accelerate-data/content-skills",
   "license": "MIT",
+  "commands": "./commands",
   "keywords": [
     "content",
     "gtm",

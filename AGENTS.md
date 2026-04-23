@@ -24,3 +24,6 @@ Slash commands for creating customer-facing content (pitch decks, blog posts, sa
 
 - Keep all command files under `commands/`.
 - Commands are auto-discovered from the `commands/` directory.
+- Keep `.claude-plugin/plugin.json` and `.codex-plugin/plugin.json` on the same plugin `name` and `version`.
+- Both manifests must expose this repo's command surface with `commands` set to `./commands`.
+- When plugin package metadata changes, bump both manifest versions together and run the manifest and version-bump validators.
