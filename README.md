@@ -1,12 +1,19 @@
 # Content Skills
 
-Customer-facing content and GTM strategy artifacts.
+Customer-facing content and GTM strategy artifacts, plus shared writing and video-creation skills.
 
 ## Commands
 
 Slash commands in `commands/` for:
 - Creating customer-facing content (pitch decks, blog posts, sales one-pagers)
 - Maintaining GTM strategy artifacts (positioning, personas, marketing strategy)
+
+## Skills
+
+Auto-activating skills in `skills/`:
+- `humanizer` — strip AI-writing patterns from existing drafts ([blader/humanizer](https://github.com/blader/humanizer), MIT)
+- `human-writing` — draft fresh content in a peer/human voice ([pr-pm/prpm](https://github.com/pr-pm/prpm))
+- `remotion` — Remotion video-in-React best practices ([remotion-dev/remotion](https://github.com/remotion-dev/remotion); see `skills/remotion/NOTICE`)
 
 ## Install
 

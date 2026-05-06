@@ -1,4 +1,5 @@
 ---
+description: Audit a Vibedata pitch deck against its persona source documents using the v3 alignment framework.
 allowed-tools:
   - Read
   - Write

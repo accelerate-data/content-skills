@@ -1,4 +1,5 @@
 ---
+description: Refresh Vibedata's marketing-strategy docs across all 10 workstreams using parallel agent teams.
 allowed-tools:
   - Read
   - Write

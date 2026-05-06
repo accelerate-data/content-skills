@@ -1,4 +1,5 @@
 ---
+description: Generate a company-targeted, persona-specific Vibedata one-pager sales document via agent teams.
 allowed-tools:
   - Read
   - Write

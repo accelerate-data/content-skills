@@ -1,4 +1,5 @@
 ---
+description: Generate a company-targeted, persona-specific Vibedata pitch deck via Gamma using agent teams.
 allowed-tools:
   - Read
   - Write

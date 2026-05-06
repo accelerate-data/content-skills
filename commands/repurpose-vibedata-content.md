@@ -1,4 +1,5 @@
 ---
+description: Repurpose existing Vibedata content into a new format (thread, carousel, newsletter, video script, etc.).
 allowed-tools:
   - Read
   - Write

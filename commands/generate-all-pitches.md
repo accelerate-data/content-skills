@@ -1,4 +1,5 @@
 ---
+description: Generate base pitch decks for all 6 Vibedata personas in parallel via the Gamma REST API.
 allowed-tools:
   - Read
   - Write

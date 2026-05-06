@@ -1,4 +1,5 @@
 ---
+description: Create a brand-aligned Vibedata SEO blog post via the write-blog and copy-editing skills.
 allowed-tools:
   - Read
   - Write

@@ -1,4 +1,5 @@
 ---
+description: Refresh all 6 Vibedata GTM persona documents against the latest strategy and architecture docs.
 allowed-tools:
   - Read
   - Write

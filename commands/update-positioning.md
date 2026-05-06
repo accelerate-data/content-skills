@@ -1,4 +1,5 @@
 ---
+description: Update Vibedata positioning by propagating strategic input through strategy and architecture with adversarial debate.
 allowed-tools:
   - Read
   - Write
@@ -297,7 +298,7 @@ Print:
 Positioning updates applied. To propagate downstream, run:
 1. /update-personas
 2. /update-marketing-strategy
-3. /deck-persona-audit
+3. /audit-pitch-deck
 ```
 
 ---

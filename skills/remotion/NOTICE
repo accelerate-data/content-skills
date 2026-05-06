@@ -1,0 +1,23 @@
+skills/remotion/ — vendored from remotion-dev/remotion
+
+  Upstream:        https://github.com/remotion-dev/remotion
+  Source path:     packages/skills/skills/remotion/
+  Vendored from:   commit d4061da9d1ad9fb04f3a82fa1c64653d3ed7e93f
+  License:         Remotion License (non-MIT — see https://remotion.pro/license)
+  Usage posture:   Internal Accelerate Data tooling only. Not sold,
+                   sublicensed, or redistributed as a derivative of Remotion.
+
+The files in this directory are documentation / AI-prompt content (a
+Claude Code "skill"). They describe how to use the Remotion library; they
+are not Remotion's runtime source code, and bundling them into this
+internal plugin is not a derivative work of Remotion.
+
+To refresh from upstream:
+
+  git clone --depth=1 --filter=blob:none --sparse \
+    https://github.com/remotion-dev/remotion.git /tmp/remotion-sparse
+  git -C /tmp/remotion-sparse sparse-checkout set packages/skills/skills/remotion
+  rm -rf skills/remotion
+  cp -R /tmp/remotion-sparse/packages/skills/skills/remotion skills/remotion
+  git -C /tmp/remotion-sparse rev-parse HEAD   # update "Vendored from" above
+  rm -rf /tmp/remotion-sparse

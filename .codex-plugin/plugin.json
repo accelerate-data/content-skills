@@ -1,13 +1,14 @@
 {
   "name": "content-skills",
-  "description": "Customer-facing content and GTM strategy artifacts.",
-  "version": "1.0.1",
+  "description": "Customer-facing content and GTM strategy commands plus writing and Remotion video skills.",
+  "version": "1.1.0",
   "author": {
     "name": "Accelerate Data"
   },
   "repository": "https://github.com/accelerate-data/content-skills",
   "license": "MIT",
   "commands": "./commands",
+  "skills": "./skills/",
   "keywords": [
     "content",
     "gtm",
@@ -17,7 +18,7 @@
   ],
   "interface": {
     "displayName": "Content Skills",
-    "shortDescription": "GTM content and strategy commands.",
+    "shortDescription": "GTM content commands plus writing and video skills.",
     "developerName": "Accelerate Data",
     "category": "Marketing",
     "capabilities": [],

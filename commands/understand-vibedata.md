@@ -1,4 +1,5 @@
 ---
+description: Load Vibedata strategy, architecture, and GTM context into the conversation (read-only).
 allowed-tools:
   - Read
   - Glob
