@@ -1,0 +1,145 @@
+name: Sync vendored skills
+
+on:
+  schedule:
+    - cron: "0 9 * * 1"
+  workflow_dispatch:
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  sync-vendored-skills:
+    name: Sync vendored skills
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Sync humanizer
+        run: curl -fsSL https://raw.githubusercontent.com/blader/humanizer/main/SKILL.md -o skills/humanizer/SKILL.md
+
+      - name: Sync human-writing
+        run: curl -fsSL https://raw.githubusercontent.com/pr-pm/prpm/main/.claude/skills/human-writing/SKILL.md -o skills/human-writing/SKILL.md
+
+      - name: Sync Remotion skill
+        id: remotion
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          OLD_SHA="$(awk '/Vendored from:/ {print $4}' skills/remotion/NOTICE)"
+          echo "old_sha=${OLD_SHA}" >> "$GITHUB_OUTPUT"
+
+          git clone --depth=1 --filter=blob:none --sparse \
+            https://github.com/remotion-dev/remotion.git /tmp/remotion-sparse
+          git -C /tmp/remotion-sparse sparse-checkout set packages/skills/skills/remotion
+          NEW_SHA="$(git -C /tmp/remotion-sparse rev-parse HEAD)"
+          echo "new_sha=${NEW_SHA}" >> "$GITHUB_OUTPUT"
+
+          rm -rf skills/remotion/SKILL.md skills/remotion/rules
+          cp -R /tmp/remotion-sparse/packages/skills/skills/remotion/. skills/remotion/
+
+          cat > skills/remotion/NOTICE <<EOF
+          skills/remotion/ — vendored from remotion-dev/remotion
+
+            Upstream:        https://github.com/remotion-dev/remotion
+            Source path:     packages/skills/skills/remotion/
+            Vendored from:   commit ${NEW_SHA}
+            License:         Remotion License (non-MIT — see https://remotion.pro/license)
+            Usage posture:   Internal Accelerate Data tooling only. Not sold,
+                             sublicensed, or redistributed as a derivative of Remotion.
+
+          The files in this directory are documentation / AI-prompt content (a
+          Claude Code "skill"). They describe how to use the Remotion library; they
+          are not Remotion's runtime source code, and bundling them into this
+          internal plugin is not a derivative work of Remotion.
+
+          To refresh from upstream:
+
+            git clone --depth=1 --filter=blob:none --sparse \
+              https://github.com/remotion-dev/remotion.git /tmp/remotion-sparse
+            git -C /tmp/remotion-sparse sparse-checkout set packages/skills/skills/remotion
+            rm -rf skills/remotion
+            cp -R /tmp/remotion-sparse/packages/skills/skills/remotion skills/remotion
+            git -C /tmp/remotion-sparse rev-parse HEAD   # update "Vendored from" above
+            rm -rf /tmp/remotion-sparse
+          EOF
+
+          rm -rf /tmp/remotion-sparse
+
+      - name: Detect vendored skill changes
+        id: changes
+        shell: bash
+        run: |
+          set -euo pipefail
+
+          if [ -z "$(git status --porcelain skills/)" ]; then
+            echo "changed=false" >> "$GITHUB_OUTPUT"
+            exit 0
+          fi
+
+          echo "changed=true" >> "$GITHUB_OUTPUT"
+
+          humanizer_status="$(git status --porcelain -- skills/humanizer/SKILL.md)"
+          human_writing_status="$(git status --porcelain -- skills/human-writing/SKILL.md)"
+          remotion_status="$(git status --porcelain -- skills/remotion)"
+
+          {
+            echo "body<<PR_BODY"
+            echo "Updates vendored skills from upstream."
+            echo
+            echo "Changed sources:"
+            if [ -n "$humanizer_status" ]; then
+              echo "- humanizer: blader/humanizer main"
+            fi
+            if [ -n "$human_writing_status" ]; then
+              echo "- human-writing: pr-pm/prpm main"
+            fi
+            if [ -n "$remotion_status" ]; then
+              echo "- remotion: remotion-dev/remotion packages/skills/skills/remotion (${{ steps.remotion.outputs.old_sha }} → ${{ steps.remotion.outputs.new_sha }})"
+            fi
+            echo
+            echo "Footer: Includes a plugin manifest patch version bump so CI version-bump validation passes."
+            echo "PR_BODY"
+          } >> "$GITHUB_OUTPUT"
+
+      - name: Bump plugin manifest patch version
+        if: steps.changes.outputs.changed == 'true'
+        run: |
+          python3 - <<'PY'
+          import json
+          from pathlib import Path
+
+          paths = [
+              Path(".claude-plugin/plugin.json"),
+              Path(".codex-plugin/plugin.json"),
+          ]
+          manifests = []
+          for path in paths:
+              with path.open(encoding="utf-8") as handle:
+                  manifests.append(json.load(handle))
+
+          versions = [manifest.get("version") for manifest in manifests]
+          if versions[0] != versions[1]:
+              raise SystemExit(f"manifest versions must match before bumping: {versions[0]!r} != {versions[1]!r}")
+
+          major, minor, patch = map(int, versions[0].split("."))
+          next_version = f"{major}.{minor}.{patch + 1}"
+
+          for path, manifest in zip(paths, manifests):
+              manifest["version"] = next_version
+              path.write_text(json.dumps(manifest, indent=2) + "\n", encoding="utf-8")
+          PY
+
+      - name: Create pull request
+        if: steps.changes.outputs.changed == 'true'
+        uses: peter-evans/create-pull-request@v7
+        with:
+          branch: chore/sync-vendored-skills
+          title: "chore: sync vendored skills"
+          body: ${{ steps.changes.outputs.body }}
+          commit-message: "chore: sync vendored skills from upstream"
