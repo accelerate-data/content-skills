@@ -12,13 +12,13 @@ allowed-tools:
 
 Refresh all GTM persona documents to align with the latest Vibedata strategy and architecture using agent teams.
 
-## Step 0 — Discover Repo Locations
+## Step 0 — Discover Repo Location
 
-Use `git rev-parse --show-toplevel` to get this repo's root. From its parent directory, locate sibling repos:
-- **vd-specs-product-vision** (VISION_ROOT)
-- **vd-specs-product-architecture** (ARCH_ROOT)
+Use `git rev-parse --show-toplevel` to get this repo's root. From its parent directory, locate the sibling repo:
 
-If a required sibling repo is not found, warn the user and halt.
+- **docs-product-vision** (VISION_ROOT) — holds both strategy and architecture as peer documents at the repo root (the former `vibedata-architecture` repo was absorbed on 2026-05-28; its content lives here now).
+
+If the sibling repo is not found, warn the user and halt.
 
 ## Step 1: Load Core Context
 
@@ -47,7 +47,7 @@ You are refreshing the {PERSONA_NAME} GTM persona to align with the latest Vibed
 
 Read these source documents first:
 - Strategy: {VISION_ROOT}/vibedata-strategy.md
-- Architecture: {ARCH_ROOT}/vibedata-architecture.md
+- Architecture: {VISION_ROOT}/vibedata-architecture.md
 
 Then read your assigned persona file:
 - gtm_personas/indvidual_personas/{PERSONA_FILE}

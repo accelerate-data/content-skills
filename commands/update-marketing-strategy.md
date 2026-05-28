@@ -35,13 +35,13 @@ If no match is found or the result is ambiguous, use AskUserQuestion to ask the 
 
 Set `VD_GTM_ROOT` to the verified path.
 
-### Locate Sibling Repos
+### Locate Sibling Repo
 
-From `{VD_GTM_ROOT}`'s parent directory, locate sibling repos:
-- **vd-specs-product-vision** (VISION_ROOT)
-- **vd-specs-product-architecture** (ARCH_ROOT)
+From `{VD_GTM_ROOT}`'s parent directory, locate the sibling repo:
 
-If a required sibling repo is not found, warn the user and halt.
+- **docs-product-vision** (VISION_ROOT) — holds both strategy and architecture as peer documents at the repo root (the former `vibedata-architecture` repo was absorbed on 2026-05-28; its content lives here now).
+
+If the sibling repo is not found, warn the user and halt.
 
 ---
 
@@ -53,14 +53,14 @@ Execute `/understand-vibedata` and wait for its confirmation checklist. This loa
 
 Then read these additional files. Do not proceed until every file is read.
 
-**Supporting vision context:**
-- All files in `{VISION_ROOT}/context/`
+**Supporting strategy and architecture context:**
+- All files in `{VISION_ROOT}/context/` (strategy and architecture context now live in one merged directory)
 
 **Existing competitor research (authoritative — do NOT do new competitor research, use this as ground truth):**
 - All files in `{VISION_ROOT}/context/competition/`
 
-**Supporting architecture context:**
-- All files in `{ARCH_ROOT}/context/`
+**Architecture appendices (consult as needed for technical capability claims):**
+- All files in `{VISION_ROOT}/appendices/`
 
 **Engineering-as-marketing reference docs (authoritative — preserve these, do not regenerate):**
 - `{VD_GTM_ROOT}/marketing-strategy/07a-utility-inventory.md` — ranked utility inventory with competitive whitespace
@@ -117,7 +117,7 @@ Output: `{VD_GTM_ROOT}/marketing-strategy/03-competitive-analysis.md`
 
 Read and follow `{VD_GTM_ROOT}/.claude/openclaudia-skills/growth-strategy/SKILL.md`.
 
-Read: `{VD_GTM_ROOT}/marketing-strategy/_context-brief.md`, `{VISION_ROOT}/vibedata-strategy.md`, `{ARCH_ROOT}/vibedata-architecture.md`
+Read: `{VD_GTM_ROOT}/marketing-strategy/_context-brief.md`, `{VISION_ROOT}/vibedata-strategy.md`, `{VISION_ROOT}/vibedata-architecture.md`
 
 Task:
 1. Define a North Star Metric for Vibedata and justify it against the product strategy.

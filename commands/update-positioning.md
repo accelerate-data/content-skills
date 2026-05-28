@@ -26,13 +26,13 @@ Input: `$ARGUMENTS` — either inline text or a file path to read.
 
 ---
 
-## Step 0b — Discover Repo Locations
+## Step 0b — Discover Repo Location
 
-Use `git rev-parse --show-toplevel` to get this repo's root. From its parent directory, locate sibling repos:
-- **vd-specs-product-vision** (VISION_ROOT)
-- **vd-specs-product-architecture** (ARCH_ROOT)
+Use `git rev-parse --show-toplevel` to get this repo's root. From its parent directory, locate the sibling repo:
 
-If a required sibling repo is not found, warn the user and halt.
+- **docs-product-vision** (VISION_ROOT) — holds both strategy and architecture as peer documents at the repo root (the former `vibedata-architecture` repo was absorbed on 2026-05-28; its content lives here now). Strategy and architecture changes both happen on the same branch in this single repo.
+
+If the sibling repo is not found, warn the user and halt.
 
 ---
 
@@ -223,13 +223,14 @@ Print the PR URL before continuing to Phase 2.
 
 ## Step 2: Phase 2 — Architecture Update (no debate)
 
-Proceed immediately after Phase 1 PR is created (optimistic flow — does not wait for merge).
+Proceed immediately after the Phase 1 PR is created. Phase 2 adds an **additional commit on the same branch** as Phase 1 (`positioning-update/{SHORT_SLUG}` in `{VISION_ROOT}/`), so the existing PR gains the architecture change rather than spinning up a second PR. This matches the post-merge structure where strategy and architecture co-evolve in one repository.
 
 ### Read
 
 - The now-updated `{VISION_ROOT}/vibedata-strategy.md` (local working copy with Phase 1 changes)
-- `{ARCH_ROOT}/vibedata-architecture.md`
-- All files in `{ARCH_ROOT}/context/`
+- `{VISION_ROOT}/vibedata-architecture.md`
+- All files in `{VISION_ROOT}/context/` (strategy and architecture context now share one directory)
+- All files in `{VISION_ROOT}/appendices/` (architecture appendices A–G)
 
 ### Analyze & Recommend
 
@@ -240,6 +241,7 @@ Identify architecture changes implied by the updated strategy. Write a recommend
 ```
 
 Same report structure as Phase 1:
+
 - Summary of strategy changes driving this update
 - Specific recommended architecture changes (add / modify / remove) with rationale
 - Downstream impact assessment
@@ -248,45 +250,42 @@ Same report structure as Phase 1:
 
 Present recommendations via `AskUserQuestion` with the same three options (Approve / Modify / Reject).
 
-If rejected, skip the apply and PR steps but still print the downstream reminder in Step 3.
+If rejected, skip the apply and push steps but still print the downstream reminder in Step 3.
 
 ### Apply
 
-On approval:
+On approval, while still on `positioning-update/{SHORT_SLUG}` in `{VISION_ROOT}/`:
 
-1. Edit `{ARCH_ROOT}/vibedata-architecture.md` with the approved changes.
-2. Save provenance: `{ARCH_ROOT}/context/{TODAY}-positioning-input-{SHORT_SLUG}.md`.
+1. Edit `{VISION_ROOT}/vibedata-architecture.md` with the approved changes.
+2. If any appendices (A–G) need parallel updates, edit those too.
+3. Update `{VISION_ROOT}/CHANGELOG-architecture.md` with a dated entry summarizing the change.
 
-### PR
-
-In the `{ARCH_ROOT}/` repo, run:
+### Push to existing PR
 
 ```bash
-git checkout -b positioning-update/{SHORT_SLUG}
-git add vibedata-architecture.md context/
-git commit -m "Positioning update: {SHORT_SLUG}"
-git push -u origin positioning-update/{SHORT_SLUG}
+git add vibedata-architecture.md appendices/ CHANGELOG-architecture.md
+git commit -m "Positioning update ({SHORT_SLUG}): architecture changes"
+git push origin positioning-update/{SHORT_SLUG}
 ```
 
-Then create the PR:
+The push appends commits to the open PR from Phase 1. Then leave a PR comment summarizing the Phase 2 addition so reviewers know an architecture commit was added after their initial review:
 
 ```bash
-gh pr create --title "Positioning update: {SHORT_SLUG}" --reviewer hbanerjee74,ukakkad --body "$(cat <<'EOF'
-## Summary
-{Paste the recommendation summary section from the report}
+gh pr comment --body "$(cat <<'EOF'
+## Phase 2 addition: architecture changes
 
-## Changes
-{List of specific changes applied}
+{Paste the recommendation summary section from the architecture report}
 
-## Downstream Impact
-{Impact assessment from the report}
+### Architecture changes
+{List of specific changes applied to vibedata-architecture.md and appendices}
 
-🤖 Generated with [Claude Code](https://claude.com/claude-code)
+### Downstream Impact
+{Impact assessment from the architecture report}
 EOF
 )"
 ```
 
-Print the PR URL.
+Print the PR URL (unchanged from Phase 1).
 
 ---
 
@@ -311,7 +310,7 @@ Positioning updates applied. To propagate downstream, run:
 - Reference cases auto-derived from `{VISION_ROOT}/context/competition/` and `{VISION_ROOT}/context/personas/`. If fewer than 2 usable cases, ask user before proceeding.
 - Read debate reference templates from `.claude/skills/debating-it-out/references/` at the steps indicated.
 - All recommendation reports go to `./position-changes/`. No exceptions.
-- All git operations happen in the respective sibling repo directories (`{VISION_ROOT}/`, `{ARCH_ROOT}/`), not in this repo.
+- All git operations happen in the `{VISION_ROOT}/` sibling repo (strategy and architecture share one branch + PR after the 2026-05-28 merge), not in this repo.
 - Use the user's git identity (configured in their global CLAUDE.md) for commits.
 - Be specific to Vibedata. Every recommended change must trace to something in the new input or existing source material.
 - Flag genuine ambiguities in the source material explicitly rather than guessing.
