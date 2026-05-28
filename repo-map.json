@@ -1,12 +1,12 @@
 {
-  "generated_at": "2026-04-15T00:00:00Z",
+  "generated_at": "2026-05-28T18:30:00Z",
   "repo_root": "content-skills",
   "primary_languages": ["Markdown", "JSON"],
   "applications": [
     {
       "name": "content-skills plugin",
       "type": "shared plugin source",
-      "description": "Single plugin-source repository with Claude and Codex manifests, commands under commands/. No skills directory — this repo only has slash commands."
+      "description": "Single plugin-source repository with Claude and Codex manifests. Slash commands under commands/ for GTM content + strategy work; auto-activating skills under skills/ for writing/video assistance and Vibedata documentation routing."
     }
   ],
   "modules": {
@@ -32,11 +32,16 @@
     },
     "commands": {
       "path": "commands/",
-      "description": "Slash commands for GTM content creation and strategy maintenance."
+      "description": "Slash commands for GTM content creation, strategy maintenance, and Vibedata docs routing (`understand-vibedata`, `vibedata-docs-router`)."
+    },
+    "skills": {
+      "path": "skills/",
+      "description": "Auto-activating skills. Vendored: humanizer, human-writing, remotion. First-party: vibedata-docs-router."
     }
   },
   "key_directories": {
     "commands/": "All command files owned by this plugin repo",
+    "skills/": "Auto-activating SKILL.md files; one subdirectory per skill",
     ".claude-plugin/": "Claude plugin manifest",
     ".codex-plugin/": "Codex plugin manifest",
     "scripts/": "Repo-local validation scripts",

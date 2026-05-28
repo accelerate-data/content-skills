@@ -14,6 +14,7 @@ Auto-activating skills in `skills/`:
 - `humanizer` — strip AI-writing patterns from existing drafts ([blader/humanizer](https://github.com/blader/humanizer), MIT)
 - `human-writing` — draft fresh content in a peer/human voice ([pr-pm/prpm](https://github.com/pr-pm/prpm))
 - `remotion` — Remotion video-in-React best practices ([remotion-dev/remotion](https://github.com/remotion-dev/remotion); see `skills/remotion/NOTICE`)
+- `vibedata-docs-router` — route to the most-relevant Vibedata documentation source(s) by walking the `vd-intelligence` graph artifact
 
 ## Install
 
