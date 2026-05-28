@@ -8,45 +8,75 @@ allowed-tools:
 
 Load Vibedata strategy, architecture, and GTM context into this conversation. No analysis — just read and confirm.
 
-## Step 1 — Discover Repo Location
+## Step 1 — Fetch the Source Graph
 
-Use `git rev-parse --show-toplevel` to get the GTM repo root. From its parent directory, locate the sibling repo:
+Run this command via Bash to fetch `graph.json` from the stable gist URL:
 
-- **docs-product-vision** (a.k.a. `vibedata-strategy-vision` on GitHub) — contains both strategy and architecture docs as peer documents at the repo root. The repo absorbed the former `vibedata-architecture` repo on 2026-05-28.
+```bash
+curl -fsSL "https://gist.githubusercontent.com/admiraldata/47ea7b6d58a3d747b2e5a808360a37f9/raw/graph.json"
+```
 
-If the sibling repo is not found, warn the user but continue with whatever is available.
+If curl fails (non-zero exit or empty response), halt immediately with:
 
-## Step 2 — Read Compulsory Documents
+> Error: Could not fetch graph.json from the Vibedata source graph gist.
+> Run `make publish-graph` in the vd-intelligence repo to republish, then retry this command.
 
-Read both of these files in parallel (these are required context); both live in `docs-product-vision/`:
+Do not attempt to fall back to local files or sibling repos.
 
-1. `docs-product-vision` → `vibedata-strategy.md`
-2. `docs-product-vision` → `vibedata-architecture.md`
+## Step 2 — Parse and Identify Compulsory Nodes
 
-If a file is missing, report it as `[ ] NOT FOUND` in the confirmation output.
+Parse the JSON returned in Step 1.
 
-## Step 3 — Confirm and List Available Context
+**Compulsory nodes**: all nodes where `type` is `"strategy"` or `"architecture"`.
 
-After reading the compulsory files, output a checklist showing what was loaded and what additional context is available (without reading it). Format:
+For each compulsory node:
+- Read `canonical_path`. Format is `owner/repo:path-in-repo`.
+- Split on the first `:` to get `<owner/repo>` and `<path-in-repo>`.
+- Fetch the file via Bash:
+
+```bash
+gh api repos/<owner/repo>/contents/<path-in-repo> --jq '.content' | base64 -d
+```
+
+Read the decoded content into the conversation context.
+
+If `canonical_path` is null for a compulsory node, report it as `[ ] MISSING (no canonical_path)` in Step 3 output.
+
+If the `gh api` call fails (auth error, 404, etc.), report it as `[ ] FETCH-FAILED — <node-id>` and continue with remaining nodes. Do not halt the whole command on a single fetch failure.
+
+## Step 3 — Confirm Loaded and List Available Context
+
+After processing all compulsory nodes, output the following. Use checkmarks for successfully loaded files and the failure markers above for anything that didn't load.
+
+### Loaded (compulsory)
 
 ```
 Context loaded:
-- [x] vibedata-strategy.md (docs-product-vision)
-- [x] vibedata-architecture.md (docs-product-vision)
-
-Additional context available (ask me to load any of these):
-- Architecture appendices — docs-product-vision → appendices/ (A: engineering sidebar, B: data mesh, C: release lifecycle, D: implementation gap log, E: agent architecture, F: harness, G: coordination patterns)
-- Architecture changelog — docs-product-vision → CHANGELOG-architecture.md
-- Compliance + war review — docs-product-vision → context/{compliance.md, war-review.md, testing-strategy-policy.md}
-- User flows — docs-product-vision → user-flows/ (workflow inventory, persona views, component views, category inventories)
-- GTM personas — gtm_personas/individual_personas/*.md (6 persona files)
-- Marketing strategy — marketing-strategy/*.md (11 workstream docs)
-- Position changes — position-changes/ (historical positioning analysis)
-- Branding — branding/
-- Case studies — case-studies/
-- Content — content/
-- Pitch decks — pitch-decks/
-- One-pagers — one-pagers/
+- [x] <node-id> — <canonical_path>   (one line per strategy/architecture node)
 ```
 
-Do not read optional documents unless the user explicitly asks. Do not summarize, synthesize, or analyze any content.
+### Available (optional — ask me to load any of these)
+
+For every non-compulsory node that has a `canonical_path` or non-null `summary`, print one line grouped by type:
+
+```
+Additional context available (ask me to load any of these):
+
+context:
+- <node-id> — <summary if non-null, else canonical_path>
+
+flow:
+- <node-id> — <summary if non-null, else canonical_path>
+
+gtm:
+- <node-id> — <summary if non-null, else canonical_path>
+```
+
+Omit a type section entirely if no nodes of that type have any listable signal (`canonical_path` or `summary`).
+
+## Rules
+
+- Do NOT read optional documents unless the user explicitly asks.
+- Do NOT summarize, synthesize, or analyze any content.
+- Do NOT modify any files.
+- The gist URL is authoritative. Never substitute a different URL or local path.
