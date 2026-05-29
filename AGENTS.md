@@ -34,7 +34,7 @@ Auto-activating agent skills under `skills/`. Each skill is a `SKILL.md` file wi
 
 `humanizer` and `human-writing` are complementary: `humanizer` cleans existing AI-generated text; `human-writing` guides drafting fresh content.
 
-`vibedata-docs-router` (skill) and `/vibedata-docs-router` (command) share the same routing algorithm — the skill auto-fires on routing questions; the command is the explicit user-typed entry. Both read `reports/graph.json` published by the `vd-intelligence` scanner via a stable secret-gist URL. The `/understand-vibedata` command also reads the same graph artifact for bulk-loading strategy + architecture.
+`vibedata-docs-router` (skill) and `/vibedata-docs-router` (command) share the same routing algorithm — the skill auto-fires on routing questions; the command is the explicit user-typed entry. Both fetch `accelerate-data/vd-intelligence:reports/graph.json` directly via `gh api` (no intermediate gist; the scanner repo is the single source of truth). The `/understand-vibedata` command also reads the same graph artifact for bulk-loading strategy + architecture.
 
 ## Conventions
 

@@ -22,12 +22,12 @@ The Vibedata source graph can have dozens of nodes across strategy, architecture
 Run via Bash:
 
 ```bash
-curl -fsSL "https://gist.githubusercontent.com/admiraldata/47ea7b6d58a3d747b2e5a808360a37f9/raw/graph.json"
+gh api -H "Accept: application/vnd.github.raw" repos/accelerate-data/vd-intelligence/contents/reports/graph.json
 ```
 
-If curl fails (non-zero exit or empty response), halt with:
+If the call fails (non-zero exit, 404, or empty response), halt with:
 
-> Error: Could not fetch graph.json. Run `make publish-graph` in the vd-intelligence repo and retry.
+> Error: Could not fetch graph.json from accelerate-data/vd-intelligence. Confirm `gh` is authenticated for that repo and retry.
 
 ## Step 2 — Tokenize the Topic
 
@@ -100,4 +100,4 @@ Fallback sources:
 
 - Do NOT read any of the matched files. Return paths and scores only. The calling agent decides what to fetch.
 - Do NOT modify graph.json or any local files.
-- Do NOT call the gist URL more than once per invocation.
+- Do NOT call the `gh api` graph-fetch more than once per invocation.

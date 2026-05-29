@@ -10,16 +10,16 @@ Load Vibedata strategy, architecture, and GTM context into this conversation. No
 
 ## Step 1 — Fetch the Source Graph
 
-Run this command via Bash to fetch `graph.json` from the stable gist URL:
+Run this command via Bash to fetch `graph.json` from the `accelerate-data/vd-intelligence` repo:
 
 ```bash
-curl -fsSL "https://gist.githubusercontent.com/admiraldata/47ea7b6d58a3d747b2e5a808360a37f9/raw/graph.json"
+gh api -H "Accept: application/vnd.github.raw" repos/accelerate-data/vd-intelligence/contents/reports/graph.json
 ```
 
-If curl fails (non-zero exit or empty response), halt immediately with:
+If the call fails (non-zero exit, 404, or empty response), halt immediately with:
 
-> Error: Could not fetch graph.json from the Vibedata source graph gist.
-> Run `make publish-graph` in the vd-intelligence repo to republish, then retry this command.
+> Error: Could not fetch graph.json from accelerate-data/vd-intelligence.
+> Confirm you have `gh` authenticated with read access to that repo, then retry.
 
 Do not attempt to fall back to local files or sibling repos.
 
@@ -79,4 +79,4 @@ Omit a type section entirely if no nodes of that type have any listable signal (
 - Do NOT read optional documents unless the user explicitly asks.
 - Do NOT summarize, synthesize, or analyze any content.
 - Do NOT modify any files.
-- The gist URL is authoritative. Never substitute a different URL or local path.
+- `accelerate-data/vd-intelligence:reports/graph.json` is authoritative. Never substitute a local path or a different repo.
