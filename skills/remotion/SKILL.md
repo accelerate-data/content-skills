@@ -21,6 +21,8 @@ Replace `my-video` with a suitable project name.
 
 ## Designing a video
 
+Before designing visual scenes, layouts, promos, motion graphics, or text-heavy videos, load [rules/video-layout.md](rules/video-layout.md) for video-first layout and text sizing guidance.
+
 Animate properties using `useCurrentFrame()` and `interpolate()`. Use Easing to customize the timing of the animation.
 
 ```tsx
@@ -332,8 +334,8 @@ See [rules/parameters.md](rules/parameters.md) for making a composition parametr
 
 ## Maps
 
-For simple maps with little flyovers, consider just using a static images for maps.
-For complex maps with many flyovers, consider using Mapbox and animating it. Instructions: [rules/mapbox.md](rules/mapbox.md)
+For simple maps with little flyovers, consider using static map images.
+For complex maps with animated routes or flyovers, load the maps rule: [rules/maplibre.md](rules/maplibre.md)
 
 ## Voiceover
 
