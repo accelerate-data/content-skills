@@ -2,7 +2,7 @@ skills/remotion/ — vendored from remotion-dev/remotion
 
   Upstream:        https://github.com/remotion-dev/remotion
   Source path:     packages/skills/skills/remotion/
-  Vendored from:   commit d4061da9d1ad9fb04f3a82fa1c64653d3ed7e93f
+  Vendored from:   commit 29c932e7a0cd730a76786a88e48e92c7542baba1
   License:         Remotion License (non-MIT — see https://remotion.pro/license)
   Usage posture:   Internal Accelerate Data tooling only. Not sold,
                    sublicensed, or redistributed as a derivative of Remotion.
@@ -14,8 +14,7 @@ internal plugin is not a derivative work of Remotion.
 
 To refresh from upstream:
 
-  git clone --depth=1 --filter=blob:none --sparse \
-    https://github.com/remotion-dev/remotion.git /tmp/remotion-sparse
+  git clone --depth=1 --filter=blob:none --sparse     https://github.com/remotion-dev/remotion.git /tmp/remotion-sparse
   git -C /tmp/remotion-sparse sparse-checkout set packages/skills/skills/remotion
   rm -rf skills/remotion
   cp -R /tmp/remotion-sparse/packages/skills/skills/remotion skills/remotion
