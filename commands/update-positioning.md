@@ -297,7 +297,6 @@ Print:
 Positioning updates applied. To propagate downstream, run:
 1. /update-personas
 2. /update-marketing-strategy
-3. /audit-pitch-deck
 ```
 
 ---

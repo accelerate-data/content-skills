@@ -5,7 +5,7 @@ Customer-facing content and GTM strategy artifacts, plus shared writing and vide
 ## Commands
 
 Slash commands in `commands/` for:
-- Creating customer-facing content (pitch decks, blog posts, sales one-pagers)
+- Creating customer-facing content (blog posts, content repurposing)
 - Maintaining GTM strategy artifacts (positioning, personas, marketing strategy)
 
 ## Skills

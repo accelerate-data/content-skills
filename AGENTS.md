@@ -19,7 +19,7 @@ Single plugin-source repo for GTM content and strategy commands plus shared writ
 
 ## Commands
 
-Slash commands for creating customer-facing content (pitch decks, blog posts, sales one-pagers) and maintaining GTM strategy artifacts (positioning, personas, marketing strategy).
+Slash commands for creating customer-facing content (blog posts, content repurposing) and maintaining GTM strategy artifacts (positioning, personas, marketing strategy).
 
 ## Skills
 
