@@ -1,9 +1,20 @@
-skills/human-writing/ — vendored from pr-pm/prpm
+skills/human-writing/ — forked from pr-pm/prpm, no longer synced
 
-  Upstream:        https://github.com/pr-pm/prpm
-  Source path:     .claude/skills/human-writing/SKILL.md
-  Vendored from:   commit 903b956417062bd9fbbb1df7cee44ca8a8291126
-  License:         MIT
+  Originally vendored from:  https://github.com/pr-pm/prpm
+  Original source path:      .claude/skills/human-writing/SKILL.md
+  Forked at:                 commit 903b956417062bd9fbbb1df7cee44ca8a8291126
+  Original license:          MIT
+
+Status: FIRST-PARTY FORK. This skill is no longer tracked against upstream and
+is not refreshed by .github/workflows/sync-vendored-skills.yml. Upstream had not
+changed the file in roughly three months, and its guidance and every worked
+example were written around PRPM's own product. Edit this file directly.
+
+The current text is substantially rewritten and extended with material from
+Wikipedia's "Signs of AI writing", published inventories of over-represented AI
+vocabulary, and a catalogue of hollow thought-leadership phrases. Structure and
+some example patterns derive from the MIT-licensed original, so the upstream
+notice is retained below.
 
     MIT License
 
@@ -27,10 +38,7 @@ skills/human-writing/ — vendored from pr-pm/prpm
     FROM, OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER
     DEALINGS IN THE SOFTWARE.
 
-Vendored verbatim, unmodified.
+To compare against upstream's current version (informational only — do not
+overwrite this fork):
 
-To refresh from upstream:
-
-  curl -fsSL https://raw.githubusercontent.com/pr-pm/prpm/main/.claude/skills/human-writing/SKILL.md \
-    -o skills/human-writing/SKILL.md
-  gh api repos/pr-pm/prpm/commits/main --jq '.sha'   # update "Vendored from" above
+  curl -fsSL https://raw.githubusercontent.com/pr-pm/prpm/main/.claude/skills/human-writing/SKILL.md

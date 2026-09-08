@@ -22,8 +22,8 @@ jobs:
       - name: Sync humanizer
         run: curl -fsSL https://raw.githubusercontent.com/blader/humanizer/main/SKILL.md -o skills/humanizer/SKILL.md
 
-      - name: Sync human-writing
-        run: curl -fsSL https://raw.githubusercontent.com/pr-pm/prpm/main/.claude/skills/human-writing/SKILL.md -o skills/human-writing/SKILL.md
+      # human-writing is a first-party fork and is deliberately not synced.
+      # See skills/human-writing/NOTICE.
 
       - name: Sync Remotion skills
         id: remotion
@@ -100,7 +100,6 @@ jobs:
           echo "changed=true" >> "$GITHUB_OUTPUT"
 
           humanizer_status="$(git status --porcelain -- skills/humanizer/SKILL.md)"
-          human_writing_status="$(git status --porcelain -- skills/human-writing/SKILL.md)"
           remotion_status="$(git status --porcelain -- 'skills/remotion-*')"
 
           {
@@ -110,9 +109,6 @@ jobs:
             echo "Changed sources:"
             if [ -n "$humanizer_status" ]; then
               echo "- humanizer: blader/humanizer main"
-            fi
-            if [ -n "$human_writing_status" ]; then
-              echo "- human-writing: pr-pm/prpm main"
             fi
             if [ -n "$remotion_status" ]; then
               echo "- remotion (12 skills): remotion-dev/remotion packages/skills/skills (${{ steps.remotion.outputs.old_sha }} → ${{ steps.remotion.outputs.new_sha }})"

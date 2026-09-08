@@ -36,7 +36,7 @@
     },
     "skills": {
       "path": "skills/",
-      "description": "Auto-activating skills. Vendored: humanizer, human-writing, and 12 remotion-* skills mirroring upstream. First-party: understanding-vibedata."
+      "description": "Auto-activating skills. Vendored: humanizer and 12 remotion-* skills mirroring upstream. First-party: understanding-vibedata, human-writing (forked from pr-pm/prpm)."
     }
   },
   "key_directories": {
