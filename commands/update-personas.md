@@ -1,5 +1,5 @@
 ---
-description: Refresh all 6 Vibedata GTM persona documents against the latest strategy and architecture docs.
+description: Refresh all 7 Vibedata GTM persona documents against the latest strategy and architecture docs.
 allowed-tools:
   - Read
   - Write
@@ -28,9 +28,9 @@ Then read every current persona file under `gtm_personas/indvidual_personas/`. T
 
 ## Step 2: Create Agent Team
 
-Create an agent team with 6 teammates. Use Opus for all agents. Run in delegate mode — coordinate only, do not edit persona files directly.
+Create an agent team with 8 teammates. Use Opus for all agents. Run in delegate mode — coordinate only, do not edit persona files directly.
 
-### Persona Teammates (5 agents)
+### Persona Teammates (7 agents)
 
 Each persona teammate owns exactly one persona file:
 
@@ -38,9 +38,11 @@ Each persona teammate owns exactly one persona file:
 |---|---|---|
 | `customer-persona` | `gtm_personas/indvidual_personas/customer_persona.md` | Buyer + User alignment with strategy |
 | `fabric-partner` | `gtm_personas/indvidual_personas/fabric_partner_persona.md` | Microsoft partnership + consumption model |
-| `anthropic-partner` | `gtm_personas/indvidual_personas/anthropic_partner_persona.md` | Technology partnership + API consumption |
+| `llm-partner` | `gtm_personas/indvidual_personas/llm_partner_persona.md` | Regional LLM hosting provider; sovereign GPU + inference consumption |
+| `aws-partner` | `gtm_personas/indvidual_personas/aws_partner_persona.md` | AWS Pattern Partners incubation + field distribution |
 | `si-partner` | `gtm_personas/indvidual_personas/si_persona.md` | Regional SI enablement + practice building |
 | `pe-investor` | `gtm_personas/indvidual_personas/pe_persona.md` | PE operating partner + portfolio value |
+| `investor` | `gtm_personas/indvidual_personas/investor_persona.md` | Seed / pre-seed equity investors in Accelerate Data |
 
 ### Spawn Prompt for Each Persona Teammate
 
@@ -110,7 +112,7 @@ Send the lead a summary of: changes made, content added, content removed, open q
 
 ### Review Teammate (1 agent)
 
-Spawn the review teammate (`persona-reviewer`) with a dependency on all 5 persona tasks completing first.
+Spawn the review teammate (`persona-reviewer`) with a dependency on all 7 persona tasks completing first.
 
 The review teammate must:
 
@@ -159,13 +161,19 @@ One-paragraph overview of what changed and why.
 #### Fabric Partner Persona
 - List of specific changes
 
-#### Anthropic Partner Persona
+#### LLM Partner Persona
+- List of specific changes
+
+#### AWS Partner Persona
 - List of specific changes
 
 #### SI Persona
 - List of specific changes
 
 #### PE Persona
+- List of specific changes
+
+#### Investor Persona
 - List of specific changes
 
 ### New Decisions Logged
@@ -180,19 +188,21 @@ One-paragraph overview of what changed and why.
 ```
 1. [persona] Refresh customer persona — assigned to customer-persona
 2. [persona] Refresh Fabric partner persona — assigned to fabric-partner
-3. [persona] Refresh Anthropic partner persona — assigned to anthropic-partner
-4. [persona] Refresh SI persona — assigned to si-partner
-5. [persona] Refresh PE persona — assigned to pe-investor
-6. [review] Cross-persona review and docs update — assigned to persona-reviewer (depends on tasks 1-5)
+3. [persona] Refresh LLM partner persona — assigned to llm-partner
+4. [persona] Refresh AWS partner persona — assigned to aws-partner
+5. [persona] Refresh SI persona — assigned to si-partner
+6. [persona] Refresh PE persona — assigned to pe-investor
+7. [persona] Refresh investor persona — assigned to investor
+8. [review] Cross-persona review and docs update — assigned to persona-reviewer (depends on tasks 1-7)
 ```
 
-Tasks 1-5 run in parallel. Task 6 starts after all 5 complete.
+Tasks 1-7 run in parallel. Task 8 starts after all 7 complete.
 
 ## Completion Criteria
 
 The refresh is complete when:
 
-1. All 5 persona files are updated and aligned with current strategy/architecture
+1. All 7 persona files are updated and aligned with current strategy/architecture
 2. Cross-persona consistency has been verified via inter-agent messaging
 3. `decisions.md` has new entries (if any decisions were made)
 4. `clarification.md` has new entries (if any questions arose)

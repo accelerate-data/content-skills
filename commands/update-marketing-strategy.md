@@ -47,7 +47,7 @@ If the sibling repo is not found, warn the user and halt.
 
 ## Step 0: Context Ingestion
 
-**Core context (strategy, architecture, all 6 personas):**
+**Core context (strategy, architecture, all 7 personas):**
 
 Invoke the `understanding-vibedata` skill with the objective "load Vibedata strategy and architecture". Wait for its report of what it read.
 

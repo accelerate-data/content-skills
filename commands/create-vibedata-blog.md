@@ -22,7 +22,7 @@ Use AskUserQuestion to gather the content brief. Ask all 4 questions in a single
 1. **Content theme / angle** (required) — What is this blog post about? What specific angle or argument should it take?
 2. **Research, notes, or raw thoughts** (optional) — Any data points, observations, customer quotes, or draft ideas to weave in?
 3. **Target audience** — Which of the 6 Vibedata personas, or "general" (data/analytics practitioner)?
-   - Options: Customer, Anthropic Partner, Fabric Partner, Investor, PE Firm, SI Partner, General
+   - Options: Customer, LLM Partner, AWS Partner, Fabric Partner, Investor, PE Firm, SI Partner, General
 4. **Target keyword(s)** (optional) — Primary SEO keyword to rank for. Leave blank to let the write-blog skill derive one from the theme.
 
 ## Step 3 — Locate vd-gtm Repo, Derive Slug, and Set Up Output Directory
