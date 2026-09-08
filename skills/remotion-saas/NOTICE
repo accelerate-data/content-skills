@@ -1,0 +1,33 @@
+skills/remotion-saas/ — vendored from remotion-dev/remotion
+
+  Upstream:        https://github.com/remotion-dev/remotion
+  Source path:     packages/skills/skills/remotion-saas/
+  Vendored from:   commit 711747ef7772cacf571037f9865bb862c08d80b8
+  License:         Remotion License (non-MIT — see https://remotion.pro/license)
+  Usage posture:   Internal Accelerate Data tooling only. Not sold,
+                   sublicensed, or redistributed as a derivative of Remotion.
+
+The files in this directory are documentation / AI-prompt content (a
+Claude Code "skill"). They describe how to use the Remotion library; they
+are not Remotion's runtime source code, and bundling them into this
+internal plugin is not a derivative work of Remotion.
+
+Local modification: cross-skill links were rewritten from `./remotion-*/`
+to `../remotion-*/`. Upstream nests these skills under one parent
+directory and writes the links relative to that parent; here each skill is
+a sibling under skills/, so the extra level is required for the links to
+resolve. This is the only change from upstream — re-apply it after any sync.
+
+To refresh all Remotion skills from upstream, run the sync workflow
+(.github/workflows/sync-vendored-skills.yml) or:
+
+  git clone --depth=1 --filter=blob:none --sparse \
+    https://github.com/remotion-dev/remotion.git /tmp/remotion-sparse
+  git -C /tmp/remotion-sparse sparse-checkout set packages/skills/skills
+  for s in /tmp/remotion-sparse/packages/skills/skills/*/; do
+    rm -rf "skills/$(basename "$s")"
+    cp -R "$s" "skills/$(basename "$s")"
+  done
+  sed -i '' 's#](\./remotion-#](../remotion-#g' skills/remotion-*/SKILL.md
+  git -C /tmp/remotion-sparse rev-parse HEAD   # update "Vendored from" above
+  rm -rf /tmp/remotion-sparse

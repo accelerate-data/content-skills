@@ -25,29 +25,47 @@ jobs:
       - name: Sync human-writing
         run: curl -fsSL https://raw.githubusercontent.com/pr-pm/prpm/main/.claude/skills/human-writing/SKILL.md -o skills/human-writing/SKILL.md
 
-      - name: Sync Remotion skill
+      - name: Sync Remotion skills
         id: remotion
         shell: bash
         run: |
           set -euo pipefail
 
-          OLD_SHA="$(awk '/Vendored from:/ {print $4}' skills/remotion/NOTICE)"
+          OLD_SHA="$(awk '/Vendored from:/ {print $4}' skills/remotion-best-practices/NOTICE)"
           echo "old_sha=${OLD_SHA}" >> "$GITHUB_OUTPUT"
 
           git clone --depth=1 --filter=blob:none --sparse \
             https://github.com/remotion-dev/remotion.git /tmp/remotion-sparse
-          git -C /tmp/remotion-sparse sparse-checkout set packages/skills/skills/remotion
+          git -C /tmp/remotion-sparse sparse-checkout set packages/skills/skills
           NEW_SHA="$(git -C /tmp/remotion-sparse rev-parse HEAD)"
           echo "new_sha=${NEW_SHA}" >> "$GITHUB_OUTPUT"
 
-          rm -rf skills/remotion/SKILL.md skills/remotion/rules
-          cp -R /tmp/remotion-sparse/packages/skills/skills/remotion/. skills/remotion/
+          UPSTREAM=/tmp/remotion-sparse/packages/skills/skills
+          if [ ! -d "$UPSTREAM" ]; then
+            echo "::error::Upstream path $UPSTREAM is missing. Remotion has moved its skills again; update this workflow." >&2
+            exit 1
+          fi
 
-          cat > skills/remotion/NOTICE <<EOF
-          skills/remotion/ — vendored from remotion-dev/remotion
+          # Upstream owns the set of skills. Drop ours, re-mirror theirs.
+          rm -rf skills/remotion-*
+          for src in "$UPSTREAM"/*/; do
+            name="$(basename "$src")"
+            mkdir -p "skills/${name}"
+            cp -R "${src}." "skills/${name}/"
+          done
+
+          # Upstream nests these under one parent and writes cross-skill links
+          # relative to it. Here each skill is a sibling under skills/, so the
+          # links need one more level up.
+          sed -i 's#](\./remotion-#](../remotion-#g' skills/remotion-*/SKILL.md
+
+          for d in skills/remotion-*/; do
+            name="$(basename "$d")"
+            cat > "${d}NOTICE" <<EOF
+          skills/${name}/ — vendored from remotion-dev/remotion
 
             Upstream:        https://github.com/remotion-dev/remotion
-            Source path:     packages/skills/skills/remotion/
+            Source path:     packages/skills/skills/${name}/
             Vendored from:   commit ${NEW_SHA}
             License:         Remotion License (non-MIT — see https://remotion.pro/license)
             Usage posture:   Internal Accelerate Data tooling only. Not sold,
@@ -58,16 +76,13 @@ jobs:
           are not Remotion's runtime source code, and bundling them into this
           internal plugin is not a derivative work of Remotion.
 
-          To refresh from upstream:
+          Local modification: cross-skill links were rewritten from \`./remotion-*/\`
+          to \`../remotion-*/\` so they resolve in this repo's flat skills/ layout.
+          This is the only change from upstream and the sync workflow re-applies it.
 
-            git clone --depth=1 --filter=blob:none --sparse \
-              https://github.com/remotion-dev/remotion.git /tmp/remotion-sparse
-            git -C /tmp/remotion-sparse sparse-checkout set packages/skills/skills/remotion
-            rm -rf skills/remotion
-            cp -R /tmp/remotion-sparse/packages/skills/skills/remotion skills/remotion
-            git -C /tmp/remotion-sparse rev-parse HEAD   # update "Vendored from" above
-            rm -rf /tmp/remotion-sparse
+          To refresh, run .github/workflows/sync-vendored-skills.yml.
           EOF
+          done
 
           rm -rf /tmp/remotion-sparse
 
@@ -86,7 +101,7 @@ jobs:
 
           humanizer_status="$(git status --porcelain -- skills/humanizer/SKILL.md)"
           human_writing_status="$(git status --porcelain -- skills/human-writing/SKILL.md)"
-          remotion_status="$(git status --porcelain -- skills/remotion)"
+          remotion_status="$(git status --porcelain -- 'skills/remotion-*')"
 
           {
             echo "body<<PR_BODY"
@@ -100,7 +115,7 @@ jobs:
               echo "- human-writing: pr-pm/prpm main"
             fi
             if [ -n "$remotion_status" ]; then
-              echo "- remotion: remotion-dev/remotion packages/skills/skills/remotion (${{ steps.remotion.outputs.old_sha }} → ${{ steps.remotion.outputs.new_sha }})"
+              echo "- remotion (12 skills): remotion-dev/remotion packages/skills/skills (${{ steps.remotion.outputs.old_sha }} → ${{ steps.remotion.outputs.new_sha }})"
             fi
             echo
             echo "Footer: Includes a plugin manifest patch version bump so CI version-bump validation passes."

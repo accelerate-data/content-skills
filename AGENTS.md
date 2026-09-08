@@ -29,10 +29,12 @@ Auto-activating agent skills under `skills/`. Each skill is a `SKILL.md` file wi
 |---|---|---|
 | `humanizer` | "sounds like AI", "de-AI this", cleaning AI-generated drafts | [blader/humanizer](https://github.com/blader/humanizer) (MIT) |
 | `human-writing` | Drafting blog posts, vision docs, technical posts in a peer/human voice | [pr-pm/prpm](https://github.com/pr-pm/prpm) `human-writing` |
-| `remotion` | Any Remotion / video-in-React code task | [remotion-dev/remotion](https://github.com/remotion-dev/remotion) `@remotion/skills` (Remotion License — see `skills/remotion/NOTICE`) |
+| `remotion-best-practices` + 11 siblings | Any Remotion / video-in-React code task. `remotion-best-practices` is the router; it links to `remotion-captions`, `-create`, `-docs`, `-interactivity`, `-maps`, `-markup`, `-multimedia`, `-render`, `-saas`, `-studio`, `-upgrade` | [remotion-dev/remotion](https://github.com/remotion-dev/remotion) `packages/skills/skills` (Remotion License — see each skill's `NOTICE`) |
 | `understanding-vibedata` | "what is Vibedata", "where is X documented in Vibedata", orienting on strategy / architecture / product behaviour / GTM | Internal — first-party skill |
 
 `humanizer` and `human-writing` are complementary: `humanizer` cleans existing AI-generated text; `human-writing` guides drafting fresh content.
+
+The Remotion skills mirror upstream's own split, so upstream owns the set — a sync adds or removes whole skills. Their cross-skill links are rewritten from `./remotion-*/` to `../remotion-*/`, because upstream nests them under one parent while this repo keeps every skill as a sibling under `skills/`. That rewrite is the only local change and the sync workflow re-applies it.
 
 `understanding-vibedata` carries its own repo map — there is no index artifact to fetch. It resolves each Vibedata repo by matching the `origin` remote against `owner/repo`, because a checkout's directory name need not match its repo name, and falls back to `gh api` when no local checkout is found. Its map, authority ranking, and excluded trees are hand-maintained; the skill carries a `Last verified` date and a maintenance note stating what to re-check.
 
@@ -40,7 +42,7 @@ Auto-activating agent skills under `skills/`. Each skill is a `SKILL.md` file wi
 
 - Commands live under `commands/`; skills live under `skills/<skill-name>/SKILL.md`.
 - Both are auto-discovered. Commands are user-invoked (`/foo`); skills auto-activate on semantic match to their `description`.
-- Vendored skills must include a `NOTICE` file when the upstream license requires attribution. See `skills/remotion/NOTICE` for the format.
+- Vendored skills must include a `NOTICE` file when the upstream license requires attribution. See `skills/remotion-best-practices/NOTICE` for the format. Every vendored skill currently carries one, including the MIT-licensed `humanizer` and `human-writing`.
 - Keep `.claude-plugin/plugin.json` and `.codex-plugin/plugin.json` on the same plugin `name`, `description`, and `version`.
 - Both manifests must expose this repo's command surface with `commands` set to `./commands` and the skills surface with `skills` set to `./skills/`.
 - When plugin package metadata changes, bump both manifest versions together and run the manifest and version-bump validators.
