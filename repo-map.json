@@ -32,11 +32,11 @@
     },
     "commands": {
       "path": "commands/",
-      "description": "Slash commands for GTM content creation, strategy maintenance, and Vibedata docs routing (`understand-vibedata`, `vibedata-docs-router`)."
+      "description": "Slash commands for GTM content creation and strategy maintenance."
     },
     "skills": {
       "path": "skills/",
-      "description": "Auto-activating skills. Vendored: humanizer, human-writing, remotion. First-party: vibedata-docs-router."
+      "description": "Auto-activating skills. Vendored: humanizer, human-writing, remotion. First-party: understanding-vibedata."
     }
   },
   "key_directories": {

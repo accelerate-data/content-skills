@@ -22,7 +22,9 @@ If the sibling repo is not found, warn the user and halt.
 
 ## Step 1: Load Core Context
 
-Execute `/understand-vibedata` and wait for its confirmation checklist. This loads `vibedata-strategy.md`, `vibedata-architecture.md`, and all 6 current personas into context.
+Invoke the `understanding-vibedata` skill with the objective "load Vibedata strategy and architecture". Wait for its report of what it read.
+
+Then read every current persona file under `gtm_personas/indvidual_personas/`. The skill reads for a stated objective and bounds itself to a few files, so it will not load the personas for you.
 
 ## Step 2: Create Agent Team
 

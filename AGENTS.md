@@ -30,11 +30,11 @@ Auto-activating agent skills under `skills/`. Each skill is a `SKILL.md` file wi
 | `humanizer` | "sounds like AI", "de-AI this", cleaning AI-generated drafts | [blader/humanizer](https://github.com/blader/humanizer) (MIT) |
 | `human-writing` | Drafting blog posts, vision docs, technical posts in a peer/human voice | [pr-pm/prpm](https://github.com/pr-pm/prpm) `human-writing` |
 | `remotion` | Any Remotion / video-in-React code task | [remotion-dev/remotion](https://github.com/remotion-dev/remotion) `@remotion/skills` (Remotion License — see `skills/remotion/NOTICE`) |
-| `vibedata-docs-router` | "where is X documented in Vibedata", "load context for X", routing across the Vibedata source graph | Internal — first-party skill for this org's `vd-intelligence` graph |
+| `understanding-vibedata` | "what is Vibedata", "where is X documented in Vibedata", orienting on strategy / architecture / product behaviour / GTM | Internal — first-party skill |
 
 `humanizer` and `human-writing` are complementary: `humanizer` cleans existing AI-generated text; `human-writing` guides drafting fresh content.
 
-`vibedata-docs-router` (skill) and `/vibedata-docs-router` (command) share the same routing algorithm — the skill auto-fires on routing questions; the command is the explicit user-typed entry. Both fetch `accelerate-data/vd-intelligence:reports/graph.json` directly via `gh api` (no intermediate gist; the scanner repo is the single source of truth). The `/understand-vibedata` command also reads the same graph artifact for bulk-loading strategy + architecture.
+`understanding-vibedata` carries its own repo map — there is no index artifact to fetch. It resolves each Vibedata repo by matching the `origin` remote against `owner/repo`, because a checkout's directory name need not match its repo name, and falls back to `gh api` when no local checkout is found. Its map, authority ranking, and excluded trees are hand-maintained; the skill carries a `Last verified` date and a maintenance note stating what to re-check.
 
 ## Conventions
 

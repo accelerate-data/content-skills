@@ -13,7 +13,7 @@ Repurpose existing Vibedata content into a new format by loading strategy contex
 
 ## Step 1 — Load Vibedata Context
 
-Execute the `/understand-vibedata` command. Wait for its confirmation checklist before proceeding.
+Invoke the `understanding-vibedata` skill with the objective "orient on Vibedata strategy and positioning for repurposing existing content". Wait for its report of what it read before proceeding.
 
 ## Step 2 — Collect Repurposing Brief
 
