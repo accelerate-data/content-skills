@@ -31,6 +31,7 @@ Auto-activating agent skills under `skills/`. Each skill is a `SKILL.md` file wi
 | `human-writing` | Drafting any prose a person reads — blog, social, newsletter, launch notes, landing copy — in a peer/human voice | First-party fork of [pr-pm/prpm](https://github.com/pr-pm/prpm) `human-writing` (MIT), no longer synced — see `skills/human-writing/NOTICE` |
 | `remotion-best-practices` + 11 siblings | Any Remotion / video-in-React code task. `remotion-best-practices` is the router; it links to `remotion-captions`, `-create`, `-docs`, `-interactivity`, `-maps`, `-markup`, `-multimedia`, `-render`, `-saas`, `-studio`, `-upgrade` | [remotion-dev/remotion](https://github.com/remotion-dev/remotion) `packages/skills/skills` (Remotion License — see each skill's `NOTICE`) |
 | `understanding-vibedata` | "what is Vibedata", "where is X documented in Vibedata", orienting on strategy / architecture / product behaviour / GTM | Internal — first-party skill |
+| `taking-vibedata-to-world` | A website or external opportunity for VibeData: branding, programs, partners, investors, grants, funded customer projects | Internal — first-party skill |
 
 `humanizer` and `human-writing` are complementary: `humanizer` is remediation — it cleans text that already exists; `human-writing` is prevention — it guides drafting so the tells never appear. Both draw on Wikipedia's "Signs of AI writing", so some pattern overlap is expected and intended.
 
@@ -39,6 +40,8 @@ Auto-activating agent skills under `skills/`. Each skill is a `SKILL.md` file wi
 The Remotion skills mirror upstream's own split, so upstream owns the set — a sync adds or removes whole skills. Their cross-skill links are rewritten from `./remotion-*/` to `../remotion-*/`, because upstream nests them under one parent while this repo keeps every skill as a sibling under `skills/`. That rewrite is the only local change and the sync workflow re-applies it.
 
 `understanding-vibedata` carries its own repo map — there is no index artifact to fetch. It resolves each Vibedata repo by matching the `origin` remote against `owner/repo`, because a checkout's directory name need not match its repo name, and falls back to `gh api` when no local checkout is found. Its map, authority ranking, and excluded trees are hand-maintained; the skill carries a `Last verified` date and a maintenance note stating what to re-check.
+
+`taking-vibedata-to-world` uses `understanding-vibedata` for company and product context. It owns the GTM opportunity workflow and issue defaults; engineering issue templates do not apply. Keep its route mapping and issue guide aligned with the live Linear parent/example issues. Preparation belongs in one consolidated prerequisite per submission by default; split only clearly separate blockers.
 
 ## Conventions
 

@@ -15,6 +15,7 @@ Auto-activating skills in `skills/`:
 - `human-writing` — draft fresh content in a peer/human voice; first-party fork, no longer synced upstream (see `skills/human-writing/NOTICE`)
 - `remotion-best-practices` and 11 sibling `remotion-*` skills — Remotion video-in-React, split as upstream ships it; `remotion-best-practices` routes to the rest ([remotion-dev/remotion](https://github.com/remotion-dev/remotion); see each skill's `NOTICE`)
 - `understanding-vibedata` — orient on what Vibedata is, then find and read the right source across the strategy, product, and GTM repos
+- `taking-vibedata-to-world` — assess a website's fit for VibeData, inspect application requirements, and prepare GTM-134/135 issues for one approval; assign new issues to `ss` and consolidate preparation into one prerequisite by default
 
 ## Install
 
