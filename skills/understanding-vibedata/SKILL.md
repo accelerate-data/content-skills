@@ -111,6 +111,8 @@ Authoritative for strategy, vision, and product architecture.
 
 `vibedata-data-engineering/docs/evals/` documents the agent evaluation scenarios and their coverage per skill.
 
+`vibedata-data-engineering/docs/design/concepts/README.md` defines the agent primitives — agent, sub-agent, skill, command, tool, prompt — and the naming convention for each. Open it before you name one or review a name.
+
 ### `accelerate-data/vibedata-official` — operator docs
 
 `docs/` holds install, update, rollback, and troubleshooting for the person who runs a deployment. Start at `docs/README.md`. The release pipeline publishes it to this repo's GitHub wiki.
@@ -145,6 +147,7 @@ Rank by what is being asked. Use recency only to break a tie *within* one rank.
 | What is it supposed to do? | `functional/` |
 | What is coming? | `proposals/` |
 | Why was it decided that way? | `adr/` |
+| How do we name an agent, skill, command, or tool? | `vibedata-data-engineering/docs/design/concepts/README.md` |
 | How does this mechanism work? | `concepts/`, then that concept's `engineering-reality.md` |
 | Where is it going? How do we position it? | `vibedata-strategy-vision` |
 | How do I install or run it? | `vibedata-official` |
